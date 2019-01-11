@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.paotui.mapper.GiveMapper" >
+  <resultMap id="BaseResultMap" type="com.paotui.entity.Give" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="uid" property="uid" jdbcType="INTEGER" />
+    <result column="wid" property="wid" jdbcType="INTEGER" />
+    <result column="getsite" property="getsite" jdbcType="VARCHAR" />
+    <result column="collectsite" property="collectsite" jdbcType="VARCHAR" />
+    <result column="gettime" property="gettime" jdbcType="TIMESTAMP" />
+    <result column="collecttime" property="collecttime" jdbcType="TIMESTAMP" />
+    <result column="spec" property="spec" jdbcType="INTEGER" />
+    <result column="price" property="price" jdbcType="INTEGER" />
+    <result column="state" property="state" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, uid, wid, getsite, collectsite, gettime, collecttime, spec, price, state
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_give
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from t_give
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.paotui.entity.Give" >
+    <selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into t_give (uid, wid, getsite, 
+      collectsite, gettime, collecttime, 
+      spec, price, state)
+    values (#{uid,jdbcType=INTEGER}, #{wid,jdbcType=INTEGER}, #{getsite,jdbcType=VARCHAR}, 
+      #{collectsite,jdbcType=VARCHAR}, #{gettime,jdbcType=TIMESTAMP}, #{collecttime,jdbcType=TIMESTAMP}, 
+      #{spec,jdbcType=INTEGER}, #{price,jdbcType=INTEGER}, #{state,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.paotui.entity.Give" >
+    <selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into t_give
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="uid != null" >
+        uid,
+      </if>
+      <if test="wid != null" >
+        wid,
+      </if>
+      <if test="getsite != null" >
+        getsite,
+      </if>
+      <if test="collectsite != null" >
+        collectsite,
+      </if>
+      <if test="gettime != null" >
+        gettime,
+      </if>
+      <if test="collecttime != null" >
+        collecttime,
+      </if>
+      <if test="spec != null" >
+        spec,
+      </if>
+      <if test="price != null" >
+        price,
+      </if>
+      <if test="state != null" >
+        state,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="uid != null" >
+        #{uid,jdbcType=INTEGER},
+      </if>
+      <if test="wid != null" >
+        #{wid,jdbcType=INTEGER},
+      </if>
+      <if test="getsite != null" >
+        #{getsite,jdbcType=VARCHAR},
+      </if>
+      <if test="collectsite != null" >
+        #{collectsite,jdbcType=VARCHAR},
+      </if>
+      <if test="gettime != null" >
+        #{gettime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="collecttime != null" >
+        #{collecttime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="spec != null" >
+        #{spec,jdbcType=INTEGER},
+      </if>
+      <if test="price != null" >
+        #{price,jdbcType=INTEGER},
+      </if>
+      <if test="state != null" >
+        #{state,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.paotui.entity.Give" >
+    update t_give
+    <set >
+      <if test="uid != null" >
+        uid = #{uid,jdbcType=INTEGER},
+      </if>
+      <if test="wid != null" >
+        wid = #{wid,jdbcType=INTEGER},
+      </if>
+      <if test="getsite != null" >
+        getsite = #{getsite,jdbcType=VARCHAR},
+      </if>
+      <if test="collectsite != null" >
+        collectsite = #{collectsite,jdbcType=VARCHAR},
+      </if>
+      <if test="gettime != null" >
+        gettime = #{gettime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="collecttime != null" >
+        collecttime = #{collecttime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="spec != null" >
+        spec = #{spec,jdbcType=INTEGER},
+      </if>
+      <if test="price != null" >
+        price = #{price,jdbcType=INTEGER},
+      </if>
+      <if test="state != null" >
+        state = #{state,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.paotui.entity.Give" >
+    update t_give
+    set uid = #{uid,jdbcType=INTEGER},
+      wid = #{wid,jdbcType=INTEGER},
+      getsite = #{getsite,jdbcType=VARCHAR},
+      collectsite = #{collectsite,jdbcType=VARCHAR},
+      gettime = #{gettime,jdbcType=TIMESTAMP},
+      collecttime = #{collecttime,jdbcType=TIMESTAMP},
+      spec = #{spec,jdbcType=INTEGER},
+      price = #{price,jdbcType=INTEGER},
+      state = #{state,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+  <select id="selectByOrder" parameterType="java.util.Map" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from t_give
+    where
+    <if test="uid != null">
+      uid = #{uid,jdbcType=INTEGER}
+    </if>
+    <if test="state != null">
+      and state = #{state,jdbcType=INTEGER}
+    </if>
+  </select>
+</mapper>
