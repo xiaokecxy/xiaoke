@@ -24,7 +24,7 @@ public class ptUserController {
 
     //登陆
     @PostMapping("/login.do")
-    @ApiOperation(notes = "实现传递参数，响应指定数量的数据",tags = {"登录"},value = "登录接口")
+    @ApiOperation(notes = "登录登陆，返回的id为uid，任何uid都为次id ",tags = {"登录登陆，返回的id为uid全局都要用"},value = "登录接口")
     public ResultVo login(String mobile, String password) {
         ResultVo vo= userService.login(mobile, password);
 
