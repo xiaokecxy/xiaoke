@@ -24,7 +24,6 @@ public class OpinionServiceImpl implements OpinionService {
     private ImgMapper imgMapper;
 
     @Override
-    @Options(useGeneratedKeys = true, keyProperty = "id", keyColumn = "id")
     public ResultVo insertOpinion(List<String> imgname, Opinion opinion) {
         ResultVo vo = new ResultVo();
         int n = opinionMapper.insert(opinion);

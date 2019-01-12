@@ -22,7 +22,7 @@
     delete from t_opinion
     where id = #{id,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="com.paotui.entity.Opinion" >
+  <insert id="insert" keyProperty="id" useGeneratedKeys="true" parameterType="com.paotui.entity.Opinion" >
     <selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER" >
       SELECT LAST_INSERT_ID()
     </selectKey>

@@ -72,16 +72,23 @@ public class ptUserController {
     @PostMapping("/register.do")
     @ApiOperation(notes = "实现传递参数，响应指定数量的数据",tags = {"注册"},value = "注册第三步(传入账号密码，创建成功)")
     public ResultVo registerThr(String mobile,String password){
-        ResultVo vo = userService.registerOne(mobile);
-        if (vo.getCode() == 0){
-            ptUser user = new ptUser();
-            user.setMobile(mobile);
-            user.setPassword(password);
-            ResultVo vo1 = userService.registerThr(user);
-            return ResultVo.setOK(null);
-        }else{
-            return ResultVo.setERROR();
-        }
+
+       return userService.registerThr(mobile,password);
+
+
+
+
+
+//        ResultVo vo = userService.registerOne(mobile);
+//        if (vo != null){
+//            ptUser user = new ptUser();
+//            user.setMobile(mobile);
+//            user.setPassword(password);
+//            ResultVo vo1 = userService.registerThr(user);
+//            return ResultVo.setOK(null);
+//        }else{
+//            return ResultVo.setERROR();
+//        }
     }
     //忘记密码(验证手机号是否存在)
     @GetMapping("/selectByMobile.do")

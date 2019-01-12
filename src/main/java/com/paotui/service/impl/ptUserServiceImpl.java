@@ -7,6 +7,7 @@ import com.paotui.entity.ptUser;
 import com.paotui.mapper.userDetailsMapper;
 import com.paotui.service.ptUserService;
 import com.paotui.vo.ResultVo;
+import org.apache.ibatis.annotations.Options;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -21,7 +22,7 @@ public class ptUserServiceImpl implements ptUserService {
     @Override
     public ResultVo registerOne(String mobile) {
         ptUser user = userDao.selectByPrimaryKey(mobile);
-        if (user == null){
+        if (user != null){
             return ResultVo.setOK(null);
         }else{
             return ResultVo.setERROR();
@@ -43,21 +44,42 @@ public class ptUserServiceImpl implements ptUserService {
 
     //注册成功
     @Override
-    public ResultVo registerThr(ptUser user) {
-        if (userDao.insert(user)>0) {
-            ptUser ptUser = userDao.selectByPrimaryKey(user.getMobile());
-            userDetails userInfo = new userDetails();
-            userInfo.setNickname(ptUser.getMobile());
-            userInfo.setUid(ptUser.getId());
-            userInfo.setSex(0);
-            userInfo.setBalance(0);
-            userInfo.setIndent(ptUser.getMobile());
-            userInfoDao.insertSelective(userInfo);
+    public ResultVo registerThr(String mobile,String password) {
+        ptUser user = new ptUser();
+        user.setMobile(mobile);
+        user.setPassword(password);
+        ResultVo vo = new ResultVo();
+        int i = userDao.insert(user);
+        int id = user.getId();
+        if (i != 0) {
+            userDetails ud = new userDetails();
+            ud.setUid(id);
+            int n = userInfoDao.insert(ud);
+            if (n > 0){
+                return vo.setOK(null);
+            }
 
-            return ResultVo.setOK(null);
-        }else {
-            return ResultVo.setERROR();
         }
+
+        return vo.setERROR();
+
+
+
+
+//        if (userDao.insert(user)>0) {
+//            ptUser ptUser = userDao.selectByPrimaryKey(user.getMobile());
+//            userDetails userInfo = new userDetails();
+//            userInfo.setNickname(ptUser.getMobile());
+//            userInfo.setUid(ptUser.getId());
+//            userInfo.setSex(0);
+//            userInfo.setBalance(0);
+//            userInfo.setIndent(ptUser.getMobile());
+//            userInfoDao.insertSelective(userInfo);
+//
+//            return ResultVo.setOK(null);
+//        }else {
+//            return ResultVo.setERROR();
+//        }
     }
 
     //登录

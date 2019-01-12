@@ -19,7 +19,7 @@
     delete from pt_user
     where id = #{id,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="com.paotui.entity.ptUser">
+  <insert id="insert" keyProperty="id" useGeneratedKeys="true" parameterType="com.paotui.entity.ptUser">
     insert into pt_user (id, mobile, password
       )
     values (#{id,jdbcType=INTEGER}, #{mobile,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}

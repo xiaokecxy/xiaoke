@@ -11,7 +11,7 @@ public interface ptUserService {
     ResultVo registerTwo(String mobile);
 
     //注册成功
-    ResultVo registerThr(ptUser user);
+    ResultVo registerThr(String mobile,String password);
 
     // 登陆
     ResultVo login(String mobile,String password);
