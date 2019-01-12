@@ -73,7 +73,7 @@ public class ptUserController {
     @ApiOperation(notes = "实现传递参数，响应指定数量的数据",tags = {"注册"},value = "注册第三步(传入账号密码，创建成功)")
     public ResultVo registerThr(String mobile,String password){
         ResultVo vo = userService.registerOne(mobile);
-        if (vo == null){
+        if (vo.getCode() == 0){
             ptUser user = new ptUser();
             user.setMobile(mobile);
             user.setPassword(password);
