@@ -9,7 +9,9 @@
   </resultMap>
   <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.paotui.entity.Nuws">
     <result column="content" jdbcType="LONGVARCHAR" property="content" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
   </resultMap>
+
   <sql id="Base_Column_List">
     id, uid, fid, sendtime
   </sql>
@@ -104,4 +106,22 @@
       sendtime = #{sendtime,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=INTEGER}
   </update>
+
+  <select id="selectById" resultMap="ResultMapWithBLOBs">
+    select
+    n.id, n.uid, n.fid, n.sendtime, n.content, i.`name`
+    from t_nuws n inner join user_details d on n.fid = d.id
+    left join t_img i on d.did = i.id where n.id = #{id,jdbcType=INTEGER}
+  </select>
+  
+  <select id="selectCount" resultType="int">
+    select count(*) from t_nuws
+  </select>
+
+  <select id="selectAll" resultMap="ResultMapWithBLOBs">
+    select
+    n.id, n.uid, n.fid, n.sendtime, n.content, i.`name`
+    from t_nuws n inner join user_details d on n.fid = d.id
+    INNER JOIN t_img i on d.did = i.id where n.uid = #{uid,jdbcType=INTEGER} limit #{index}, #{limit}
+  </select>
 </mapper>
