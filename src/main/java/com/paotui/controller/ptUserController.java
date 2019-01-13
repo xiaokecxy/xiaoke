@@ -42,7 +42,7 @@ public class ptUserController {
         user.setMobile(mobile);
 
         ResultVo vo = userService.registerOne(mobile);
-        if (vo.getCode() == 0) {
+        if (vo.getCode() != 0) {
 
             ResultVo vo1 = userService.registerTwo(mobile);
 
